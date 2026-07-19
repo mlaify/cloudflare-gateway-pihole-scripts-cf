@@ -36,6 +36,7 @@ add(POLICIES.allow?.http, { name: `${PREFIX}Allow (HTTP)`, action: "allow", filt
 add(POLICIES.blockContent?.dns,  { name: `${PREFIX}Content (DNS)`,     action: "block", filters: ["dns"],  precedence: base + 20 });
 add(POLICIES.blockContent?.http, { name: `${PREFIX}Content (HTTP)`,    action: "block", filters: ["http"], precedence: base + 21 });
 add(POLICIES.blockContent?.l4,   { name: `${PREFIX}Content (Network)`, action: "block", filters: ["l4"],   precedence: base + 22 });
+add(POLICIES.blockContent?.l4Ports, { name: `${PREFIX}Ports (Network)`, action: "block", filters: ["l4"], precedence: base + 23 });
 
 if (POLICIES.safeSearch) {
   console.log(
