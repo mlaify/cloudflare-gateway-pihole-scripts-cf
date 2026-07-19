@@ -13,11 +13,18 @@
     "cloudflare-create:list": "node cf_list_create.js",
     "cloudflare-delete:rule": "node cf_gateway_rule_delete.js",
     "cloudflare-delete:list": "node cf_list_delete.js",
-    "cloudflare-defragment": "node cf_defragment.js"
+    "cloudflare-defragment": "node cf_defragment.js",
+    "worker:dev": "wrangler dev",
+    "worker:deploy": "wrangler deploy",
+    "worker:tail": "wrangler tail",
+    "worker:secret": "wrangler secret put CLOUDFLARE_API_TOKEN"
   },
   "type": "module",
   "dependencies": {
     "dotenv": "17.4.2"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
   },
   "engines": {
     "node": "24.15.0"

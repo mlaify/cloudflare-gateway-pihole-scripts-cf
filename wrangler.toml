@@ -1,0 +1,38 @@
+name = "cgps"
+main = "worker.js"
+
+# nodejs_compat makes Wrangler vars/secrets available on process.env and provides
+# the Node built-ins the shared lib/* modules import. Keep the date recent.
+compatibility_date = "2025-07-01"
+compatibility_flags = ["nodejs_compat"]
+
+# The account this Worker deploys to comes from `wrangler login` (or the
+# CLOUDFLARE_ACCOUNT_ID env var at deploy time). It is intentionally NOT hard-coded
+# here so the account ID stays out of this public repo.
+
+# Weekly, Mondays at 03:00 UTC. Matches the project's default schedule.
+[triggers]
+crons = ["0 3 * * 1"]
+
+# Processing ~500k domains needs more than the default 30s CPU budget.
+# If `wrangler deploy` rejects this value for your plan, lower it.
+[limits]
+cpu_ms = 300000
+
+# Retain logs so `wrangler tail` and the dashboard show run history.
+[observability]
+enabled = true
+
+# --- Non-secret configuration (mirrors .env) --------------------------------
+# Secrets are NOT stored here. Set them once with:
+#   wrangler secret put CLOUDFLARE_API_TOKEN     (required)
+#   wrangler secret put CLOUDFLARE_ACCOUNT_ID    (required; kept secret so it stays out of this public repo)
+#   wrangler secret put TRIGGER_TOKEN            (optional; enables the manual /run endpoint)
+[vars]
+CLOUDFLARE_LIST_ITEM_LIMIT = "500000"
+CLOUDFLARE_LIST_ITEM_SIZE = "5000"
+DRY_RUN = "0"
+BLOCK_PAGE_ENABLED = "1"
+BLOCK_BASED_ON_SNI = "1"
+DOTENV_CONFIG_QUIET = "true"
+BLOCKLIST_URLS = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/ultimate.txt"
